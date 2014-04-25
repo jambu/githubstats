@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export github_username=''
+export github_password=''
+export db_path='gitdata.db'
+export report_path=''
