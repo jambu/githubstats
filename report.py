@@ -78,7 +78,7 @@ if __name__ == '__main__':
   parser.add_argument('-r', '--reports', nargs='*', help='''Give the report names to be generated,
     This includes top-committers, project-commits, commits-per-hour, commits-per-location''')
   parser.add_argument('-s', '--start-date', help="YYYY-MM-DD, will be used in reports requiring Start Date.")
-  parser.add_argument('-e', '--end-date', help="YYYY-MM-DD, will be used in reports requiring End Date)
+  parser.add_argument('-e', '--end-date', help="YYYY-MM-DD, will be used in reports requiring End Date.")
   parser.add_argument('-l', '--location', help="Specify a location location for the commits per location report Ex. 'San Francisco' \
     (This is the default location)")
   parser.set_defaults(reports=['top-committers'])
@@ -90,11 +90,15 @@ if __name__ == '__main__':
   args=parser.parse_args()
 
   if 'top-committers' in args.reports:
+    print 'Generating top_committers.csv...'
     generate_top_committers_report()
   if 'project-commits' in args.reports:
+    print 'Generating project_commits.csv...'
     generate_project_commits_report(args.start_date, args.end_date)
   if 'commits-per-hour' in args.reports:
+    print 'Generating commits_per_hour.csv...'
     generate_commits_per_hour_report()
   if 'commits-per-location' in args.reports:
+    print 'Generating commits_per_location.csv...'
     generate_commits_per_location_report(args.start_date, args.end_date, args.location)
 

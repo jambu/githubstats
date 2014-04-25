@@ -118,6 +118,7 @@ def get_next_page_link(link_header):
 def sleep_untill_rate_limit(result):
   current_time = int(time.time())
   time_to_wake = int(result.headers['X-RateLimit-Reset'])
+  print 'sleeping till' + str(time_to_wake) + 'seconds from epoch.'
   time.sleep(time_to_wake - current_time)
 
 def fetch_data_from_api(starting_page, callback_func):
@@ -134,13 +135,13 @@ def fetch_data_from_api(starting_page, callback_func):
 def fetch_and_load_data():
   base_url = 'https://api.github.com/'
 
-  #Runtime for all repos will take long and will exceed rate limit since,
-  #Location field is needed which is found only in the User api call.
-  #Other option is to load all the users(through the list users api call) instead of making an api call for each user. 
+  #Runtime for all repos will take long and will exceed rate limit.
+  #Location field is needed which is found only in the User api call, which means making one api call for every user.
+  #Other option is to load all the users (through the list users api call) instead of making an api call for each user. 
   #This will exceed rate limits too since I am expecting number of users to be large.
 
-  #repos_url = base_url + 'repositories?sort=created&direction=asc'
-  #fetch_data_from_api(repos_url, load_repos_data)
+  #all_repos_url = base_url + 'repositories?sort=created&direction=asc'
+  #fetch_data_from_api(all_repos_url, load_repos_data)
 
   popular_repos_url = base_url + 'search/repositories?q=created:>2014-01-01+stars:>2000'
   fetch_data_from_api(popular_repos_url, lambda x: load_repos_data(x['items']))

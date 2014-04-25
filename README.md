@@ -43,5 +43,7 @@ TODO LIST
 =========
 
 Logging
+
 Change the db queries from %s format to prevent sql injection
+
 tests
