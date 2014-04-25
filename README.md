@@ -28,6 +28,12 @@ python report.py
 
 The csv files will be created in the project root (this can be changed by changing the report_path env variable)
 
+Inorder to run the tests
+source test_config.sh
+python -m unittest discover
+
+(Be careful to source back to config.sh when you run the actual data load. This sucks has to be changed.)
+
 Facts
 =====
 
