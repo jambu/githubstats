@@ -132,7 +132,7 @@ def fetch_data_from_api(starting_page, callback_func):
     next_page = get_next_page_link(result.headers.get('link', None))
 
 
-def fetch_and_load_data():
+def fetch_and_load_data(repos_query):
   base_url = 'https://api.github.com/'
 
   #Runtime for all repos will take long and will exceed rate limit.
@@ -143,7 +143,7 @@ def fetch_and_load_data():
   #all_repos_url = base_url + 'repositories?sort=created&direction=asc'
   #fetch_data_from_api(all_repos_url, load_repos_data)
 
-  popular_repos_url = base_url + 'search/repositories?q=created:>2014-01-01+stars:>2000'
+  popular_repos_url = base_url + repos_query
   fetch_data_from_api(popular_repos_url, lambda x: load_repos_data(x['items']))
 
   git_repos = cursor.execute('SELECT id, name, owner_login from git_repos;')
@@ -163,6 +163,8 @@ def fetch_and_load_data():
 
 
 if __name__ == '__main__':
+  
   init_db()
-  fetch_and_load_data()
+  query_for_recent_favorite_repos = 'search/repositories?q=created:>2014-01-01+stars:>2000'
+  fetch_and_load_data(query_for_recent_favorite_repos)
  

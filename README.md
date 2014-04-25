@@ -46,4 +46,8 @@ Logging
 
 Change the db queries from %s format to prevent sql injection
 
-tests
+Add stricter db constraints
+
+Add more tests.
+
+Sourcing test config is ugly. Find a better way.

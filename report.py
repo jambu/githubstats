@@ -11,7 +11,7 @@ def get_csv_writer(csvfile):
   return csv.writer(csvfile,quoting=csv.QUOTE_MINIMAL)
 
 def generate_top_committers_report():
-  filepath = os.environ.get('report_path', '') + 'top_committers.csv'
+  filepath = os.path.join(os.environ.get('report_path', ''), 'top_committers.csv')
   with open(filepath, 'w') as csvfile:
     
     writer = get_csv_writer(csvfile)
@@ -27,7 +27,7 @@ def generate_top_committers_report():
 
 def generate_project_commits_report(start_date, end_date):
 
-  filepath = os.environ.get('report_path', '') + 'project_commits.csv'
+  filepath = os.path.join(os.environ.get('report_path', ''), 'project_commits.csv')
   with open(filepath, 'w') as csvfile:
     
     writer = get_csv_writer(csvfile)
@@ -41,7 +41,7 @@ def generate_project_commits_report(start_date, end_date):
 
 def generate_commits_per_hour_report():
 
-  filepath = os.environ.get('report_path', '') + 'commits_per_hour.csv'
+  filepath = os.path.join(os.environ.get('report_path', ''), 'commits_per_hour.csv')
   with open(filepath, 'w') as csvfile:
     
     writer = get_csv_writer(csvfile)
@@ -58,7 +58,7 @@ def generate_commits_per_hour_report():
 
 def generate_commits_per_location_report(start_date, end_date, location):
 
-  filepath = os.environ.get('report_path', '') + 'commits_per_location.csv'
+  filepath = os.path.join(os.environ.get('report_path', ''), 'commits_per_location.csv')
   with open(filepath, 'w') as csvfile:
     writer = get_csv_writer(csvfile)
     
