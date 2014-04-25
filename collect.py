@@ -1,5 +1,5 @@
 import os, time
-
+from datetime import datetime
 import requests
 from requests.auth import HTTPBasicAuth
 import sqlite3
@@ -10,6 +10,7 @@ db_conn = sqlite3.connect(os.environ.get('db_path', ":memory:"))
 db_conn.row_factory= sqlite3.Row
 cursor = db_conn.cursor()
 
+##DB Helpers ##
 def init_db():
   cursor.execute('''create table if not exists git_repos(id integer PRIMARY KEY,
                                                          name text, 
@@ -31,8 +32,7 @@ def init_db():
                                                            FOREIGN KEY(repo_id) REFERENCES git_repos(id)); ''')
   cursor.execute('''CREATE INDEX IF NOT EXISTS committer_id_index ON git_commits(committer_id);''')
   cursor.execute('''CREATE INDEX IF NOT EXISTS repo_id_index ON git_commits(repo_id);''')
-  #cursor.execute('''insert into git_repos values (2332, "ddd", 323, "sdsdf");''');
-  #a= cursor.execute('''select * from git_repos;''')
+ 
   db_conn.commit()
   
 def load_repos_data(api_result):
@@ -55,8 +55,9 @@ def load_commit_data(api_result, repo_id):
       try:
         #strangely this field is null for certain commits.
         if commit['committer']:
+          commit_time = datetime.strptime(commit['commit']['committer']['date'], "%Y-%m-%dT%H:%M:%SZ")
           cursor.execute("INSERT INTO git_commits VALUES('%s','%s',%s,%s);" % (commit['sha'],
-                                                                      commit['commit']['committer']['date'],
+                                                                      commit_time,
                                                                       commit['committer']['id'],
                                                                       repo_id))
       except sqlite3.IntegrityError:
@@ -83,6 +84,8 @@ def update_user_location_data(user):
                                                                                 user['id']))
     db_conn.commit()
 
+
+##API Helpers##
 def get_auth():
   guser = os.environ.get('github_username', '')
   gpass = os.environ.get('github_password', '')
@@ -101,7 +104,6 @@ def get_req(path):
     return get_req(path)
   else:
     result.raise_for_status()
-
 
 def get_next_page_link(link_header):
   if not link_header:
