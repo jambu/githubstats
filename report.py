@@ -77,8 +77,8 @@ if __name__ == '__main__':
         )
   parser.add_argument('-r', '--reports', nargs='*', help='''Give the report names to be generated,
     This includes top-committers, project-commits, commits-per-hour, commits-per-location''')
-  parser.add_argument('-s', '--start-date', help="YYYY-MM-DD")
-  parser.add_argument('-e', '--end-date', help="YYYY-MM-DD")
+  parser.add_argument('-s', '--start-date', help="YYYY-MM-DD, will be used in reports requiring Start Date.")
+  parser.add_argument('-e', '--end-date', help="YYYY-MM-DD, will be used in reports requiring End Date)
   parser.add_argument('-l', '--location', help="Specify a location location for the commits per location report Ex. 'San Francisco' \
     (This is the default location)")
   parser.set_defaults(reports=['top-committers'])
